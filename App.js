@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Data = require('./Model.js');
-
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 
 app.post('/sector', async (req, res) => {
   const sector = req.body.sector; 
@@ -15,6 +16,9 @@ app.post('/sector', async (req, res) => {
     res.status(500).json({ message: 'An error occurred while fetching distinct values' });
   }
 });
+
+app.use(cors());
+
 
 app.post('/topic', async (req, res) => {
   const sector = req.body.sector;
