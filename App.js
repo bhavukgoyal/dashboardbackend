@@ -17,7 +17,7 @@ app.post('/sector', async (req, res) => {
   }
 });
 
-app.use(cors());
+
 
 
 app.post('/topic', async (req, res) => {
