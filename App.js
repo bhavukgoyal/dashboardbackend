@@ -1,15 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Data = require('./Model.js');
-const cors = require('cors');
-const app = express();
 
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-}));
+const app = express();
+const proxy = require('http-proxy-middleware');
+
+app.use('/', proxy({ target: 'https://dashboardbackend-zmtc.onrender.com/', changeOrigin: true }));
+
 
 app.post('/sector', async (req, res) => {
   const sector = req.body.sector; 
