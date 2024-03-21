@@ -9,10 +9,10 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/sector', async (req, res) => {
-  const sector = req.body.sector; 
+  const sec = req.body.sector; 
 
   try {
-    const distinctTopics = await Data.distinct("topic", { "sector": sector });
+    const distinctTopics = await Data.distinct("topic", { sector: sec });
     
     res.status(200).json(distinctTopics);
   } catch (error) {
