@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const Data = require('./Model.js');
 const cors = require('cors');
 const app = express();
-app.use(cors({ origin: '*' }));
+
+
+app.use(cors());
 
 app.post('/sector', async (req, res) => {
   const sector = req.body.sector; 
