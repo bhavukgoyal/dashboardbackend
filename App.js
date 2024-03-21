@@ -25,6 +25,10 @@ app.post('/sector', async (req, res) => {
 
   try {
     const distinctTopics = await Data.distinct("topic", { "sector": sector });
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Request-With');
     res.status(200).json(distinctTopics);
   } catch (error) {
     res.status(500).json({ message: 'An error occurred while fetching distinct values' });
