@@ -24,21 +24,30 @@ app.post('/sector', async (req, res) => {
 
 
 app.post('/topic', async (req, res) => {
-  const sector = req.body.sector;
-  const topic = req.body.topic;
+  const sect = req.body.sector;
+  const top = req.body.topic;
 
   try {
-    const endDate = await Data.findOne({ "sector": sector, "topic": topic }, { end_year: 1, _id: 0 }).sort({ end_year: -1 });
-    
-    if (endDate) {
-      
-      res.status(200).json({ endDate: endDate.end_year });
-    } else {
-      res.status(404).json({ message: 'End date not found for the specified sector and topic' });
-    }
+    const distinctDates = await Data.distinct("end_year", { sector: sect,topic:top })
+    res.status(200).json(distinctDates);
+
   } catch (error) {
     res.status(500).json({ message: 'An error occurred while fetching the end date' });
   }
 });
+
+app.post('/final', async (req, res) => {
+  const sect = req.body.sector;
+  const top = req.body.topic;
+const ed=req.body.end_year;
+  try {
+    const results = await Data.find({ sector: sect,topic:top,end_year:ed })
+    res.status(200).json(results);
+
+  } catch (error) {
+    res.status(500).json({ message: 'An error occurred while fetching the end date' });
+  }
+});
+
 
 module.exports = app;
