@@ -6,16 +6,14 @@ const app = express();
 
 // CORS middleware to allow requests from all origins
 app.use(cors());
+app.use(express.json());
 
 app.post('/sector', async (req, res) => {
   const sector = req.body.sector; 
 
   try {
     const distinctTopics = await Data.distinct("topic", { "sector": sector });
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+    
     res.status(200).json(distinctTopics);
   } catch (error) {
     res.status(500).json({ message: 'An error occurred while fetching distinct values' });
